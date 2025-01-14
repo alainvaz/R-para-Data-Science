@@ -1,0 +1,1056 @@
+## Aula 1 - Conhecendo os dados
+
+#### Projeto do curso
+
+Nós estamos trabalhando em um projeto de uma empresa de People Analytics chamada Tech Safe.
+
+O nosso objetivo principal será realizar uma análise exploratória e responder perguntas levantadas pela Tech Safe.
+
+Ao longo do curso iremos responder diversas perguntas sobre os dados fornecidos pela empresa.
+
+Para isso, vamos utilizar a linguagem de programação R.
+
+### Projeto da aula
+
+A primeira tabela que vamos criar, será a de Colaboradores. Nessa tabela, teremos informações como: Nome, Idade, Salário, Telefone Fixo e Trabalho Remoto.
+
+Segue abaixo a tabela que a Tech passou para trabalharmos:
+
+| Nome            | Idade | Salário | Telefone Fixo    | Trabalho Remoto |
+|-----------------|-------|---------|------------------|-----------------|
+| Ana Silva       | 28    | 6230.50 | Não possui       | Sim             |
+| Carlos Oliveira | 35    | 7500.75 | \(11\) 1234-5678 | Sim             |
+| Maria Santos    | 40    | 8000.25 | \(21\) 9876-5432 | Não             |
+| João Costa      | 32    | 2460.80 | Não possui       | Sim             |
+| Fernanda Lima   | 27    | 4230.35 | \(31\) 8765-4321 | Sim             |
+
+```{r}
+ana_silva <- 'Ana Silva'
+idade <- 28
+salario <- 6230.50
+```
+
+```{r}
+ana_silva <- c('Ana Silva', 28, 6230.50, 'Não possui', TRUE)
+```
+
+```{r}
+nota  <- 5.2
+idade  <- 20
+frase <- "Olá, mundo"
+cadastrado <- TRUE
+data_atual <- as.Date("2024-01-24")
+
+# Verificando os tipos de dados
+cat("nota é do tipo:", class(nota), "\n")
+cat("idade é do tipo:", class(idade), "\n")
+cat("frase é do tipo:", class(frase), "\n")
+cat("cadastrado é do tipo:", class(cadastrado), "\n")
+cat("data_atual é do tipo:", class(data_atual), "\n")
+```
+
+```{r}
+names(ana_silva) <- c('Nome', 'Idade', 'Salario', 'Telefone', 'Trabalho remoto')
+
+ana_silva
+```
+
+```{r}
+carlos_oliveira <- c('Carlos Oliveira', 35, 7500.75, '(11) 1234-5678', TRUE)
+
+maria_santos <- c('Maria Santos', 40, 8000.25, '(21) 9876-5432', TRUE)
+
+joao_costa <- c('Joao Costa', '32', 2460.80, 'Não possui', FALSE)
+
+fernanda_lima <- c('Fernanda Lima', 27, 4230.35, '(31) 8765-4321', TRUE)
+```
+
+Para criar uma matriz no R, usamos uma função chamada `matrix()` que leva quatro argumentos:
+
+1.  `vector`: os dados que vamos usar para criar essa matriz;
+
+2.  `nrow`: o número de linhas que vamos utilizar nessa matriz;
+
+3.  `ncol`: o número de colunas que vamos utilizar nessa matriz;
+
+4.  `byrow` (campo opcional): diz se queremos criar essa matriz por linha ou por coluna. Se for verdadeiro, é por linha. Se for falso, é por coluna.
+
+```{r}
+colab_combinado <- c(ana_silva, carlos_oliveira, maria_santos, joao_costa, fernanda_lima)
+```
+
+```{r}
+matriz_colab <- matrix(colab_combinado, nrow = 5, byrow = TRUE)
+matriz_colab
+```
+
+```{r}
+rownames(matriz_colab) <- c('Colaboradora Ana', 'Colaborador Carlos', 'Colaboradora Maria', 'Colaborador Joao', 'Colaboradora Fernanda')
+
+colnames(matriz_colab) <- c('Nome','Idade','Salário','Telefone','Trabalho remoto')
+
+matriz_colab
+```
+
+```{r}
+# Vamos usar a função print()
+idade <- 25
+print("A idade é:")
+print(idade)
+```
+
+```{r}
+# Vamos usar a função cat()
+nome <- "Maria"
+idade <- 30
+
+cat("Nome:", nome, "\n")
+cat("Idade:", idade, "anos\n")
+```
+
+```{r}
+# Utilizando a função paste()
+idade <- 25
+paste("A idade é:", idade)
+```
+
+Você recebeu um conjunto de dados sobre temperaturas em diferentes cidades durante quatro trimestres do ano. Cada cidade é representada por um vetor e cada trimestre é representado por outro vetor.
+
+A sua tarefa é criar uma matriz que organize essas informações de maneira adequada. Aqui estão os vetores representando as cidades e os trimestres:
+
+```{r}
+tri_1 <- c(25, 30, 22, 28, 18)
+tri_2 <- c(20, 15, 22, 28, 32)
+tri_3 <- c(30, 35, 10, 15, 8)
+tri_4 <- c(12, 28, 25, 20, 22)
+```
+
+A ideia é que cada linha representa um trimestre e cada coluna representa uma cidade. As cidades são as seguintes, nesta ordem: São Paulo, Rio de Janeiro, Belo Horizonte, Salvador e Porto Alegre.
+
+Combine esses vetores para criar uma matriz, onde cada linha representa um trimestre e cada coluna representa uma cidade. Além disso, crie os vetores contendo os nomes para as linhas (trimestres) e os nomes para as colunas (cidades) e nomeie a matriz.
+
+```{r}
+# Vetores representando cidades e trimestres
+cidades <- c("São Paulo", "Rio de Janeiro", "Belo Horizonte", "Salvador", "Porto Alegre")
+trimestres <- c("1º Trimestre", "2º Trimestre", "3º Trimestre", "4º Trimestre")
+
+# Combinar os vetores
+trimestres_comb <- c(tri_1, tri_2, tri_3, tri_4)
+
+# Criar a matriz combinando os vetores
+dados_temperatura <- matrix(trimestres_comb,
+  nrow = 4, # ou nrow = length(trimestres)
+  ncol = 5, # ou ncol = length(cidades)
+  byrow = TRUE,
+)
+
+# Nomeando a matriz
+rownames(dados_temperatura) <- trimestres 
+colnames(dados_temperatura) <- cidades 
+
+# Exibir a matriz
+dados_temperatura
+```
+
+## Aula 2 - Manipulando os dados
+
+```{r}
+# Criando uma matriz
+minha_matriz <- matrix(1:6, nrow = 2, ncol = 3)
+
+# Exibindo a matriz
+print(minha_matriz)
+```
+
+```{r}
+meu_dataframe <- data.frame(
+  Nome = c("Ana", "Beatriz", "Carlos"),
+  Idade = c(25, 30, 22),
+  Salario = c(50000, 60000, 45000)
+)
+
+# Exibindo o data frame
+print(meu_dataframe)
+```
+
+### Projeto da aula
+
+Nesta aula, vamos utilizar uma tabela de vendas, contendo os valores das vendas de 5 colaboradores referentes a 6 meses de vendas.
+
+```{r}
+# Vetor com valores das vendas
+vendas_jan <- c(20, 18, 25, 16, 23)
+vendas_fev <- c(15, 20, 22, 18, 19)
+vendas_mar <- c(25, 23, 20, 17, 21)
+vendas_abr <- c(18, 15, 19, 20, 24)
+vendas_mai <- c(22, 25, 21, 15, 18)
+vendas_jun <- c(21, 22, 19, 17, 20)
+```
+
+```{r}
+# Nomes das pessoas
+pessoas <- c("Pedro Santos", "Carla Nunes", "Maria Eduarda", "Luiz Felipe", "Julio Costa")
+
+# Nomes dos meses
+meses <- c("Janeiro", "Fevereiro", "Marco", "Abril", "Maio", "Junho")
+```
+
+```{r}
+# Combinar as vendas
+vendas_semestre <- c(vendas_jan, vendas_fev, vendas_mar, vendas_abr, vendas_mai, vendas_jun)
+
+# Vendas de cada pessoa por mês (em milhares)
+matriz_vendas <- matrix(vendas_semestre, nrow = 5, byrow = FALSE)
+```
+
+```{r}
+# Nomear a matriz
+rownames(matriz_vendas) <- pessoas
+colnames(matriz_vendas) <- meses
+```
+
+```{r}
+# Exibir a matriz
+matriz_vendas
+```
+
+Vamos tentar descobrir o seguinte:
+
+-   Qual colaborador teve o maior faturamento nas vendas?
+
+-   Qual mês teve maior faturamento?
+
+    ```{r}
+    vendas_jan
+    ```
+
+    ```{r}
+    vendas_jan[3]
+    ```
+
+    ```{r}
+    vendas_jan[4]
+    ```
+
+    ```{r}
+    matriz_vendas[4,]
+    ```
+
+    ```{r}
+    matriz_vendas['Luiz Felipe',]
+    ```
+
+A função `seq()` no R é uma ferramenta versátil utilizada para gerar sequências de números. Ela oferece uma maneira flexível de criar vetores numéricos ou sequências de datas com intervalos específicos.
+
+```{r}
+# Criando uma sequência de 1 a 10 com intervalo de 2
+sequencia1 <- seq(1, 10, by = 2)
+
+# Imprimindo a sequência
+print(sequencia1)
+```
+
+```{r}
+# Criando uma sequência de 50 a 1 com 10 elementos
+sequencia2 <- seq(50, 1, length.out = 10)
+
+# Imprimindo a sequência
+print(sequencia2)
+```
+
+```{r}
+# Criando uma sequência de datas de hoje a 6 meses no futuro
+sequencia_datas <- seq(Sys.Date(), by = "1 month", length.out = 6)
+
+# Imprimindo a sequência de datas
+print(sequencia_datas)
+```
+
+```{r}
+# Criando uma sequência de 0 a 1 com 5 elementos
+sequencia3 <- seq(0, 1, length.out = 5)
+
+# Imprimindo a sequência
+print(sequencia3)
+```
+
+Respondendo as perguntas:
+
+```{r}
+rowSums(matriz_vendas)
+```
+
+```{r}
+colSums(matriz_vendas)
+```
+
+Separando dados:
+
+```{r}
+total_colab <- rowSums(matriz_vendas)
+matriz_total_colab <- cbind(matriz_vendas, total_colab)
+
+matriz_total_colab
+```
+
+```{r}
+total_meses <- colSums(matriz_vendas)
+
+matriz_total_meses <- rbind(matriz_vendas, total_meses)
+
+matriz_total_meses
+```
+
+```{r}
+# Criando a matriz de temperaturas
+temperaturas <- matrix(c(25, 30, 22, 28, 18, 20, 15, 22, 28, 32, 30, 35, 10, 15, 8, 12, 28, 25, 20, 22), 
+                       nrow = 4, ncol = 5, byrow = TRUE)
+
+# Definindo os nomes das linhas (trimestres)
+rownames(temperaturas) <- c('1 Tri', '2 Tri', '3 Tri', '4 Tri')
+
+# Definindo os nomes das colunas (estados)
+colnames(temperaturas) <- c('SP', 'BA', 'PA', 'MG', 'RS')
+
+temperaturas
+```
+
+-   Temperatura de SP ao longo de todos os trimestres do ano;
+
+```{r}
+temperaturas[,'SP']
+```
+
+```{r}
+temperaturas[1:4,'SP']
+```
+
+```{r}
+temperaturas[1:4,1]
+```
+
+-   Temperatura do 2º trimestre de todas as cidades;
+
+```{r}
+temperaturas[2,]
+```
+
+-   Temperatura de MG no 3º trimestre.
+
+```{r}
+temperaturas['3 Tri', 'MG']
+```
+
+```{r}
+temperaturas[3,4]
+```
+
+```{r}
+temperaturas['3 Tri', 4]
+```
+
+Você recebeu um conjunto de dados que representa as vendas mensais de produtos em diferentes regiões. O conjunto de dados é uma matriz chamada `dados_vendas`:
+
+```{r}
+# Matriz representando as vendas mensais (em milhares de unidades)
+dados_vendas <- matrix(c(50, 60, 45, 30, 55, 65, 40, 35, 60, 70, 55, 50), nrow = 3, byrow = TRUE)
+
+# Nomes das regiões e dos meses
+regioes <- c("Norte", "Sul", "Nordeste")
+meses <- c("Jan", "Fev", "Mar", "Abr")
+
+rownames(dados_vendas) <- regioes
+colnames(dados_vendas) <- meses
+```
+
+1.  **Indexação:**
+
+    -   Acesse o valor de vendas da região "Sul" no mês de "Fev".
+
+2.  **Somar Colunas:**
+
+    -   Calcule o total de vendas para cada mês, utilizando a função `colSums()`. Armazene os resultados em um vetor chamado `total_por_mes`.
+
+3.  **Somar Linhas:**
+
+    -   Calcule o total de vendas para cada região, utilizando a função `rowSums()`. Armazene os resultados em um vetor chamado `total_por_regiao`.
+
+4.  **Adicionar Nova Região:**
+
+    -   Adicione uma nova região chamada "Centro-Oeste" com as vendas mensais (em milhares de unidades) de 35, 40, 30, 25 para os meses de "Jan", "Fev", "Mar", "Abr", respectivamente.
+
+```{r}
+vendas_fev_sul <- dados_vendas["Sul", "Fev"]
+vendas_fev_sul 
+```
+
+```{r}
+total_por_mes <- colSums(dados_vendas)
+total_por_mes 
+```
+
+```{r}
+total_por_regiao <- rowSums(dados_vendas)
+total_por_regiao 
+```
+
+```{r}
+nova_regiao <- c(35, 40, 30, 25)
+dados_vendas <- rbind(dados_vendas, nova_regiao)
+rownames(dados_vendas)[4] <- "Centro-Oeste"
+
+dados_vendas 
+```
+
+## Aula 3 - Estruturas condicionais e de repetição
+
+### Projeto da aula
+
+Suponha que estamos lidando com dados de um armazém que vende produtos eletrônicos e tem um estoque representado por uma matriz de preços unitários e quantidades em estoque.
+
+```{r}
+preco <- c(50, 100, 150, 25, 75)
+
+qtd_estoque <- c(10, 5, 20, 30, 7)
+
+preco_estoque <- c(preco, qtd_estoque)
+
+matriz_estoque <- matrix(preco_estoque, ncol = 2)
+
+rownames(matriz_estoque) <- c('Notebook', 'Tablet', 'Monitor', 'Smartphone', 'Headset')
+colnames(matriz_estoque) <- c('Produto', 'Estoque')
+
+matriz_estoque
+```
+
+A partir dessa matriz, vamos buscar descobrir o seguinte:
+
+-   Calcular o valor total em estoque.
+
+```{r}
+total_estoque <- matriz_estoque[,1] * matriz_estoque[,2]
+total_estoque
+```
+
+```{r}
+matriz_estoque <- cbind(matriz_estoque, total_estoque)
+matriz_estoque
+```
+
+-   Identificar produtos com estoque baixo (menos de 15 unidades).
+
+```{r}
+estoque_abaixo <- matriz_estoque[,2] < 15
+matriz_estoque[estoque_abaixo,] 
+```
+
+-   Classificar o valor total em estoque em alto ou baixo.
+
+```{r}
+total_somado <- colSums(matriz_estoque)
+total_somado
+```
+
+```{r}
+total_somado[3]
+
+```
+
+```{r}
+if(total_somado[3] > 3000){
+  paste('Total em estoque é alto. Valor total: ', total_somado[3] )
+}else{
+   paste('Total em estoque está abaixo de 3000. Valor total: ', total_somado[3] )  
+}
+```
+
+-   Aplicar desconto de 10% em todos os produtos do estoque.
+
+```{r}
+matriz_estoque
+```
+
+```{r}
+for (i in 1:nrow(matriz_estoque)){
+  matriz_estoque[i,1] <- matriz_estoque[i,1] * 0.9 
+}
+
+matriz_estoque
+
+```
+
+-   Descobrir qual o produto mais vendido.
+
+```{r}
+indice_mais_vendido <- 0
+quantidade_mais_vendida <- 0
+i <- 1
+```
+
+```{r}
+while(i <= nrow(matriz_estoque) & quantidade_mais_vendida < 30){
+  if(matriz_estoque[i,2] > quantidade_mais_vendida){
+    quantidade_mais_vendida <- matriz_estoque[i,2]
+    indice_mais_vendido <- i
+  }
+  i <- i + 1
+}
+
+cat('Produto mais vendido: ', indice_mais_vendido)
+cat('\nTotal em estoque:' , matriz_estoque[indice_mais_vendido,2])
+```
+
+```{r}
+matriz_estoque[4,]
+```
+
+**Exemplos para aprendizado:**
+
+-   Exemplo 1: Aplicando Condição a um Vetor:
+
+```{r}
+idades <- c(25, 16, 22, 30, 14)
+categorias <- ifelse(idades >= 18, "Adulto", "Jovem")
+print(categorias)
+```
+
+-   Exemplo 2: Aplicando Condição a uma Matriz
+
+```{r}
+notas <- matrix(c(75, 45, 80, 55, 90, 65), ncol = 2)
+resultados <- ifelse(notas >= 60, "Aprovado", "Reprovado")
+print(resultados)
+```
+
+-   Exemplo 3: if() e else():
+
+```{r}
+idade <- 20
+
+if (idade >= 18) {
+  categoria <- "Adulto"
+} else {
+  categoria <- "Jovem"
+}
+
+categoria
+```
+
+```{r}
+idade <- 20
+categoria <- ifelse(idade >= 18, "Adulto", "Jovem")
+categoria
+```
+
+-   Exemplo 4:
+
+### **Operadores Lógicos**
+
+Os operadores lógicos, como &, \|, &&, \|\|, e !, são utilizados para combinar condições lógicas. Eles ajudam a formular expressões complexas e a realizar avaliações booleanas, facilitando a tomada de decisões em estruturas condicionais.
+
+Podemos conferir alguns exemplos de operadores lógicos abaixo:
+
+-   `&` (E lógico): Retorna TRUE se ambas as condições forem verdadeiras.
+
+-   `&&` (E lógico curto-circuito): Semelhante a `&`, mas avalia apenas a primeira condição se a segunda não for necessária.
+
+-   `|` (OU lógico): Retorna TRUE se pelo menos uma das condições for verdadeira.
+
+-   `||` (OU lógico curto-circuito): Semelhante a `|`, mas avalia apenas a primeira condição se a segunda não for necessária.
+
+-   `!` (NÃO lógico): Inverte o valor lógico, de TRUE para FALSE e vice-versa.
+
+### **Operadores de Comparação**
+
+Operadores de comparação são usados para comparar valores e gerar expressões booleanas. Esses operadores são fundamentais para avaliar relações entre variáveis e tomar decisões com base nessas comparações.
+
+A seguir estão alguns exemplos de operadores de comparação:
+
+-   `==` (igual a)
+
+-   `!=` (diferente de)
+
+-   `<` (menor que)
+
+-   `>` (maior que)
+
+-   `<=` (menor ou igual a)
+
+-   `>=` (maior ou igual a)
+
+### **Operadores Aritméticos**
+
+Operadores aritméticos são empregados para realizar operações matemáticas em R. Eles são essenciais para realizar cálculos numéricos e manipular dados de forma eficiente dentro de expressões aritméticas.
+
+Abaixo, podemos conhecer alguns exemplos de operadores aritméticos:
+
+-   `+` (adição)
+
+-   `-` (subtração)
+
+-   `*` (multiplicação)
+
+-   `/` (divisão)
+
+-   `^` (exponenciação)
+
+-   `%%` (resto da divisão)
+
+-   `%/%` (divisão inteira)
+
+### **Exemplos Práticos**
+
+Agora que fomos apresentados a função ifelse() e a alguns operadores importantes do R, vamos conferir alguns exemplos práticos com eles:
+
+1 - **Operador de Comparação:**
+
+Suponha que você deseje classificar alunos com base em suas notas em uma escala de desempenho, onde notas acima de 70 são consideradas "Aprovado" e as demais são "Reprovado". Utilizando o operador de comparação `>=` e a função `ifelse()`:
+
+1 - **Operador de Comparação:**
+
+```{r}
+   # Exemplo com Operador de Comparação
+   nota_aluno <- 78
+
+   status_aprovacao <- ifelse(nota_aluno >= 70, "Aprovado", "Reprovado")
+
+   print(status_aprovacao)
+```
+
+2 - **Operador Aritmético:**
+
+```{r}
+   # Exemplo com Operador Aritmético
+   pontuacao_desempenho <- 85
+   salario_base <- 5000
+
+   bonus <- ifelse(pontuacao_desempenho > 80, salario_base * 0.1, salario_base)
+
+   print(bonus)
+```
+
+3 - **Operador Lógico:**
+
+```{r}
+   # Exemplo com Operador Lógico
+   idade_cliente <- 22
+   status_assinatura <- TRUE
+
+   acesso_permitido <- ifelse(idade_cliente > 18 & status_assinatura == TRUE, "Acesso Permitido", "Acesso Negado")
+
+   print(acesso_permitido)
+```
+
+## Aula 4 - Funções matemáticas e estatísticas
+
+### Projeto da aula
+
+Vamos criar uma nova matriz de vendas. Dessa vez, vamos incluir a receita das vendas na matriz.
+
+```{r}
+dados_vendas <- matrix(c(
+  1230.75, 20, 24615,
+  840.46, 35, 29416.10,
+  110.20, 15, 1653,
+  519.67, 10, 5196.70,
+  650.90, 25, 16272.50
+
+), ncol = 3, byrow = TRUE)
+
+colnames(dados_vendas) <- c("Preco", "Quantidade", "Valor Total")
+rownames (dados_vendas) <- c("Laptop", "Smart TV", "Webcam", "Microfone", "Smartwatch")
+
+dados_vendas
+```
+
+A partir dessa matriz, vamos responder às seguintes :
+
+-   Quantos produtos com preço acima de 600 foram vendidos?
+
+```{r}
+dados_vendas[dados_vendas[,1] > 600,]
+```
+
+```{r}
+dados_filtrados <- dados_vendas[dados_vendas[,1] > 600,]
+```
+
+```{r}
+qtd_filtrados <- sum(dados_filtrados[,2])
+qtd_filtrados
+```
+
+```{r}
+qtd_total <- sum(dados_vendas[,2])
+resultado_porcentagem <- (qtd_filtrados /qtd_total) * 100
+resultado_porcentagem
+```
+
+```{r}
+round(resultado_porcentagem)
+```
+
+-   Qual a receita média das vendas?
+
+```{r}
+dados_vendas[,3]
+```
+
+```{r}
+mean(dados_vendas[,3])
+```
+
+-   Existe uma diferença muito grande entre a média e a mediana das receitas?
+
+```{r}
+median(dados_vendas[,3])
+```
+
+-   Qual o produto mais caro e qual o mais barato?
+
+```{r}
+dados_vendas[,1]
+```
+
+```{r}
+which.max(dados_vendas[,1])
+```
+
+```{r}
+valor_maior <- which.max(dados_vendas[,1])
+valor_maior
+```
+
+```{r}
+dados_vendas[valor_maior,1]
+```
+
+```{r}
+valor_menor <- which.min(dados_vendas[,1])
+valor_menor 
+```
+
+```{r}
+dados_vendas[valor_menor, 1]
+```
+
+**Exemplo de Vetores:**
+
+```{r}
+# Criando um vetor
+vetor <- c(5, 10, 3, 8, 15)
+
+# Encontrando o valor mínimo e máximo
+minimo <- min(vetor)
+maximo <- max(vetor)
+
+# Imprimindo os resultados
+print(minimo)  # Saída: 3
+print(maximo)  # Saída: 15
+```
+
+**Exemplo de Matrizes:**
+
+```{r}
+# Criando uma matriz
+matriz <- matrix(c(5, 10, 3, 8, 15, 2, 7, 12, 9), nrow = 3, ncol = 3)
+
+# Encontrando o valor mínimo e máximo
+minimo_matriz <- min(matriz)
+maximo_matriz <- max(matriz)
+
+# Imprimindo os resultados
+print(minimo_matriz)  # Saída: 2
+print(maximo_matriz)  # Saída: 15
+```
+
+**Calculando a média dos alunos**
+
+```{r}
+notas_alunos <- matrix(c(80, 95, 75, 60, 90, 85, 92, 88, 78, 65, 70, 85), nrow = 3, ncol = 4, byrow = TRUE)
+
+rownames(notas_alunos) <- c('Felipe', 'Carla', 'Tais')
+colnames(notas_alunos) <- c('Historia', 'Portugues', 'Ingles', 'Matematica')
+```
+
+```{r}
+notas_alunos[]
+```
+
+```{r}
+medias_alunos <- c()
+for (i in 1:nrow(notas_alunos)) {
+  medias_alunos[i] <- mean(notas_alunos[i, ])
+}
+
+medias_alunos
+```
+
+Ou
+
+```{r}
+medias_alunos <- c()
+for (i in 1:nrow(notas_alunos)) {
+  medias_alunos <- c(medias_alunos, sum(notas_alunos[i, ]) / ncol(notas_alunos))
+}
+
+medias_alunos
+```
+
+**Exemplos:**
+
+O vetor de temperaturas será o seguinte:
+
+```{r}
+# Dados de temperatura média diária em graus Celsius
+temperaturas_diarias <- c(25.5, 28.2, 22.8, 30.3, 18.6, 20.7, 15.9)
+
+temperaturas_diarias
+```
+
+**1 - Média de Temperatura:**
+
+-   Calcule a média das temperaturas diárias.
+
+-   Utilize a função `round()` para arredondar o resultado da média.
+
+```{r}
+media_temperatura <- round(mean(temperaturas_diarias), 1)
+cat("Média de temperatura diária:", media_temperatura, "°C\n"
+```
+
+**2 - Dia de Maior Temperatura:**
+
+-   Identifique o dia em que a cidade teve a temperatura mais alta.
+
+```{r}
+dia_maior_temperatura <- which.max(temperaturas_diarias)
+cat("Dia de maior temperatura:", dia_maior_temperatura, "\n")
+```
+
+**3 - Dia de Menor Temperatura:**
+
+-   Identifique o dia em que a cidade teve a temperatura mais baixa.
+
+```{r}
+dia_menor_temperatura <- which.min(temperaturas_diarias)
+cat("Dia de menor temperatura:", dia_menor_temperatura, "\n")
+```
+
+Criação de Matriz:
+
+```{r}
+dados_vendas <- matrix(c(
+  1230.75, 20, 24615,
+  840.46, 35, 29416.10,
+  110.20, 15, 1653,
+  519.67, 10, 5196.70,
+  650.90, 25, 16272.50
+
+), ncol = 3, byrow = TRUE)
+
+rownames(dados_vendas) <- c('Ar Condicinado', 'Cama', 'Mesa', 'Refrigerador', 'Sofa')
+colnames(dados_vendas) <- c("Preco", "Quantidade", "Receita")
+
+dados_vendas
+```
+
+## Aula 5 - Fatores
+
+### Projeto da aula
+
+Suponha que você tenha um conjunto de dados que representa o status de entrega de diferentes produtos.
+
+```{r}
+status_entrega <- c("Entregue", "Em Transito", "Pendente", "Entregue", "Em Transito")
+
+nomes_produtos <- c("Smartphone", "Notebook", "Monitor", "Mouse", "Tablet")
+
+names(status_entrega) <- nomes_produtos
+
+status_entrega
+```
+
+```{r}
+fator_entrega <- factor(status_entrega)
+fator_entrega
+```
+
+```{r}
+fator_entrega <- factor(status_entrega, ordered = TRUE, levels = c('Em Transito', 'Pendente', 'Entregue'))
+
+fator_entrega
+```
+
+```{r}
+levels(fator_entrega) <- c( 'Pendente', 'Em Transito', 'Entregue')
+fator_entrega
+```
+
+```{r}
+fator_entrega[3]
+```
+
+```{r}
+fator_entrega[3] > fator_entrega[4]
+```
+
+```{r}
+fator_entrega
+```
+
+```{r}
+prioridade <- fator_entrega %in% c('Pendente', 'Em Transito')
+
+prioridade
+```
+
+```{r}
+fator_entrega[prioridade]
+```
+
+```{r}
+cont_pendente <- sum(fator_entrega == 'Pendente')
+cont_pendente
+```
+
+```{r}
+cont_transito <- sum(fator_entrega == 'Em Transito')
+cont_transito
+```
+
+```{r}
+cont_entregue <- sum(fator_entrega == 'Entregue')
+cont_entregue
+```
+
+```{r}
+desempenho <- c("Médio", "Alto", "Baixo", "Médio", "Alto", "Médio")
+fator_desempenho <- factor(desempenho, levels = c("Baixo", "Médio", "Alto"), ordered = TRUE)
+
+fator_desempenho
+```
+
+**Para saber mais: funções de transformação**
+
+No universo da linguagem de programação R, diversas funções são essenciais para a verificação e manipulação eficaz de dados. Entre elas, as funções `is.null()`, `is.character()`, `is.numeric()`, `is.integer()` e `as.character()` desempenham papéis fundamentais na análise de tipos de dados.
+
+Vamos explorar tanto a teoria por trás dessas funções quanto exemplos práticos de sua aplicação. Primeiramente, vamos descobrir o que cada uma dessas funções faz:
+
+1.  **`is.null()`**: Esta função verifica se um objeto é do tipo `NULL`. Um objeto `NULL` indica ausência de valor ou a presença de um valor indefinido.
+
+2.  **`is.character()`**: Utilizada para determinar se um objeto é do tipo caractere (`character`). Em R, caracteres são usados para representar strings de texto.
+
+3.  **`is.numeric()`**: Essa função verifica se um objeto é do tipo numérico (`numeric`). Objetos numéricos podem representar números inteiros ou de ponto flutuante.
+
+4.  **`is.integer()`**: Indica se um objeto é do tipo inteiro (`integer`). Em R, mesmo números inteiros são por padrão tratados como números de ponto flutuante, e esta função ajuda a verificar se um objeto é estritamente do tipo inteiro.
+
+5.  **`as.character()`**: A função `as.character()` converte um objeto para o tipo caractere. Isso é útil quando é necessário alterar o tipo de dado de um objeto para realizar operações específicas.
+
+```{r}
+# Exemplo de dados
+valor <- 42
+texto <- "Olá, mundo!"
+nulo <- NULL
+
+# Verificando tipos
+is.null(nulo)           # Retorna TRUE, pois nulo é um objeto NULL
+is.character(texto)     # Retorna TRUE, pois texto é uma string de texto
+is.numeric(valor)       # Retorna TRUE, pois valor é um número
+is.integer(valor)       # Retorna FALSE, pois mesmo sendo um número, não é estritamente do tipo inteiro
+as.character(valor)     # Converte o número 42 para a string "42"
+```
+
+Você está analisando as avaliações de clientes para um determinado produto, onde as classificações podem ser 'Bom', 'Mediano' ou 'Ruim'. O objetivo é calcular a quantidade de avaliações de cada categoria usando um loop `for`.
+
+A seguir podemos conferir o fator de avaliações que iremos utilizar:
+
+```{r}
+avaliacoes <- c('Bom', 'Ruim', 'Mediano', 'Bom', 'Ruim', 'Mediano', 'Bom', 'Ruim', 'Mediano', 'Bom')
+fator_avl <- factor(avaliacoes, ordered = TRUE, levels = c('Ruim', 'Mediano', 'Bom'))
+```
+
+crie um código para calcular a quantidade de avaliações de cada categoria ('Bom', 'Mediano', 'Ruim'). Selecione as duas alternativas corretas.
+
+```{r}
+contagem_avaliacoes <- c(0, 0, 0)
+for (avl in fator_avl) {
+  if (avl == 'Bom') {
+    contagem_avaliacoes[1] <- contagem_avaliacoes[1] + 1
+  } else if (avl == 'Mediano') {
+    contagem_avaliacoes[2] <- contagem_avaliacoes[2] + 1
+  } else if (avl == 'Ruim') {
+    contagem_avaliacoes[3] <- contagem_avaliacoes[3] + 1
+  }
+}
+
+contagem_avaliacoes[]
+```
+
+ou
+
+```{r}
+contagem_avaliacoes <- c(0, 0, 0)
+for (i in 1:length(avaliacoes)) {
+  categoria <- fator_avl[i]
+  if (categoria == 'Bom') {
+    contagem_avaliacoes[1] <- contagem_avaliacoes[1] + 1
+  } else if (categoria == 'Mediano') {
+    contagem_avaliacoes[2] <- contagem_avaliacoes[2] + 1
+  } else if (categoria == 'Ruim') {
+    contagem_avaliacoes[3] <- contagem_avaliacoes[3] + 1
+  }
+}
+
+contagem_avaliacoes[]
+```
+
+Você está gerenciando dados de uma pesquisa de satisfação de clientes para um serviço de entrega de refeições. Cada cliente atribui uma nota de satisfação em uma escala de 1 a 5 para três categorias: pontualidade, qualidade da comida e atendimento.
+
+Os dados estão organizados da seguinte forma:
+
+```{r}
+pontualidade <- c(4, 5, 3, 4, 2)
+qualidade_comida <- c(5, 3, 4, 2, 5)
+atendimento <- c(3, 4, 5, 2, 4)
+
+fator_pontualidade <- factor(pontualidade, levels = 1:5, ordered = TRUE)
+fator_qualidade_comida <- factor(qualidade_comida, levels = 1:5, ordered = TRUE)
+fator_atendimento <- factor(atendimento, levels = 1:5, ordered = TRUE)
+```
+
+**1 - Média de Avaliação para Cada Categoria:**
+
+-   Calcule a média das avaliações para pontualidade, qualidade da comida e atendimento.
+
+-   Utilize a função `as.numeric()` para converter as avaliações para o tipo numérico.
+
+-   Utilize a função `round()` para arredondar o resultado da média para uma casa decimal.
+
+```{r}
+media_pontualidade <- round(mean(as.numeric(fator_pontualidade)), 1)
+media_qualidade_comida <- round(mean(as.numeric(fator_qualidade_comida)), 1)
+media_atendimento <- round(mean(as.numeric(fator_atendimento)), 1)
+
+cat("Média de pontualidade:", media_pontualidade, "\n")
+cat("Média de qualidade da comida:", media_qualidade_comida, "\n")
+cat("Média de atendimento:", media_atendimento, "\n")
+```
+
+**2 - Categoria com Maior Média:**
+
+-   Identifique qual categoria recebeu a maior média de avaliação.
+
+```{r}
+categoria_maior_media <- which.max(c(media_pontualidade, media_qualidade_comida, media_atendimento))
+cat("Categoria com maior média de avaliação:", categoria_maior_media, "\n")
+```
+
+**3 - Categoria com Menor Média:**
+
+-   Identifique qual categoria recebeu a menor média de avaliação.
+
+```{r}
+categoria_menor_media <- which.min(c(media_pontualidade, media_qualidade_comida, media_atendimento))
+cat("Categoria com menor média de avaliação:", categoria_menor_media, "\n")
+```
